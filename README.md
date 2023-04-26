@@ -22,3 +22,5 @@ The first layer is a self-attention layer. As input it takes the nine cells, wit
 ### Implementation Details
 
 ### Visualization
+
+![Run 1](./Visualization/Dynamic_Positioning/run1.gif)
