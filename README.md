@@ -47,6 +47,7 @@ In the fourth run, the energy is located in two, equidistance points. The cells 
 * Change loss to make model save energy
   * Change routine to make more steps before loss is calculated
 * Set of similar test cases (five each or something)
+* Possibly: Change dynamic training to make it more capable of reaching greater distances?
 
 
 
