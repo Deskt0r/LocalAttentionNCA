@@ -41,6 +41,12 @@ In the fourth run, the energy is located in two, equidistance points. The cells 
 
 ![Run 4](./Visualization/Dynamic_Positioning/run4.gif)
 
+### To Do:
+* Test energy barrier without retraining
+  * If it does not work, add barrier to training routine
+* Change loss to make model save energy
+  * Change routine to make more steps before loss is calculated
+* Set of similar test cases (five each or something)
 
 
 
