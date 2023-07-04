@@ -4,33 +4,11 @@ Created on Wed Apr 26 15:28:42 2023
 
 @author: felixsr
 """
-
-import os
-import io
-import PIL.Image, PIL.ImageDraw
-import base64
-import zipfile
-import json
-import requests
 import numpy as np
-import matplotlib.pylab as pl
-import glob
-import matplotlib.pyplot as plt
-
 import tensorflow as tf
 
-from IPython.display import Image, HTML, clear_output
-#import tqdm
-
-from functions_general import get_energy_mask
-
-import os
-os.environ['FFMPEG_BINARY'] = 'ffmpeg'
-#import moviepy.editor as mvp
-#from moviepy.video.io.ffmpeg_writer import FFMPEG_VideoWriter
-clear_output()
-
-print(tf.__version__)
+from functions_general import get_energy_mask, get_inverted_living_mask, get_living_mask, wrap_pad, numpy_argwhere
+import config
 
 def pre_update(x):
     energy_mask = get_energy_mask(x)
@@ -41,11 +19,11 @@ def pre_update(x):
     # update chemical channel according to living/dead cells
     inverted_living_mask = get_inverted_living_mask(x4,mode='alpha')
     living_mask = get_living_mask(x4,mode='alpha')
-    x2 += CHEMISTRY_RATE*tf.cast(living_mask, tf.float32)
-    x2 -= CHEMISTRY_RATE*tf.cast(inverted_living_mask, tf.float32)
+    x2 += config.CHEMISTRY_RATE*tf.cast(living_mask, tf.float32)
+    x2 -= config.CHEMISTRY_RATE*tf.cast(inverted_living_mask, tf.float32)
     x2 = tf.clip_by_value(x2, 0, 10)
     # update energy channel
-    x3 -= ENERGY_RATE*tf.cast(living_mask, tf.float32)
+    x3 -= config.ENERGY_RATE*tf.cast(living_mask, tf.float32)
     return tf.concat([x1,x2,x3,x4], axis=-1)
 
 def local_energy_update(x_padded,sum_alphas,idx,energy_update):
@@ -65,7 +43,7 @@ def global_energy_update(x):
     sum_alphas = tf.nn.conv2d(tf.cast(x4_padded[...,0:1], tf.float32), tf.cast(kernel, tf.float32), [1, 1, 1, 1], 'SAME')
     living_index = numpy_argwhere(living_mask)
 
-    energy_update1 = np.zeros((BATCH_SIZE,TARGET_SIZE,TARGET_SIZE,1))
+    energy_update1 = np.zeros((config.BATCH_SIZE,config.TARGET_SIZE,config.TARGET_SIZE,1))
     """There are three cases for energy:
         1. energy (can be 0, but does not matter) on living cell. 
         In this case, redistribute energy in neighborhood to cell

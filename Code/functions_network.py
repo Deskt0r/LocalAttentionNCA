@@ -4,34 +4,13 @@ Created on Wed Apr 26 15:25:19 2023
 
 @author: felixsr
 """
-
-import os
-import io
-import PIL.Image, PIL.ImageDraw
-import base64
-import zipfile
-import json
-import requests
-import numpy as np
-import matplotlib.pylab as pl
-import glob
-import matplotlib.pyplot as plt
-
 import tensorflow as tf
+import config
 
-from IPython.display import Image, HTML, clear_output
-#import tqdm
-
-import os
-os.environ['FFMPEG_BINARY'] = 'ffmpeg'
-#import moviepy.editor as mvp
-#from moviepy.video.io.ffmpeg_writer import FFMPEG_VideoWriter
-clear_output()
-
-print(tf.__version__)
+from functions_general import wrap_pad
 
 class Convolutional_Attention(tf.keras.layers.Layer):
-    def __init__(self, h, d_k, d_v, d_model, flag_padding=True, input_dims=[BATCH_SIZE,TARGET_SIZE,TARGET_SIZE,4], **kwargs):
+    def __init__(self, h, d_k, d_v, d_model, flag_padding=True, input_dims=[config.BATCH_SIZE,config.TARGET_SIZE,config.TARGET_SIZE,4], **kwargs):
         super(Convolutional_Attention, self).__init__(**kwargs)
         self.input_dims=input_dims
         self.flag_padding = flag_padding
@@ -84,7 +63,7 @@ class Convolutional_Attention(tf.keras.layers.Layer):
         return x
 
 class CAModel(tf.keras.Model):
-    def __init__(self, channel_n=CHANNEL_N, fire_rate=CELL_FIRE_RATE, input_dims=[BATCH_SIZE,TARGET_SIZE,TARGET_SIZE,4]):
+    def __init__(self, channel_n=config.CHANNEL_N, fire_rate=config.CELL_FIRE_RATE, input_dims=[config.BATCH_SIZE,config.TARGET_SIZE,config.TARGET_SIZE,4]):
         super().__init__()
         self.input_dims=input_dims
         self.channel_n = channel_n
@@ -147,7 +126,7 @@ class CAModel(tf.keras.Model):
         return tf.concat([x1,x2], axis=-1)
     
 class CAModel_conv(tf.keras.Model):
-    def __init__(self, channel_n=CHANNEL_N, fire_rate=CELL_FIRE_RATE, input_dims=[BATCH_SIZE,TARGET_SIZE,TARGET_SIZE,4]):
+    def __init__(self, channel_n=config.CHANNEL_N, fire_rate=config.CELL_FIRE_RATE, input_dims=[config.BATCH_SIZE,config.TARGET_SIZE,config.TARGET_SIZE,4]):
         super().__init__()
         self.input_dims=input_dims
         self.channel_n = channel_n
