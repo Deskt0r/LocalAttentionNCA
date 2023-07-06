@@ -58,11 +58,10 @@ def plot_sample(sample,target,start):
 
 def create_frame(t,sample,target,start,name,path):
     fig = plot_sample(sample,target,start)
-    fig.savefig(f'../Visualization/{path}/img_{name}_{t}.png', 
-                transparent = False,  
-                facecolor = 'white'
-               )
     fig.set_size_inches(fig.get_size_inches())  # Set figure size to match the original figure
+    fig.savefig(f'../Visualization/{path}/img_{name}_{t}.png', 
+               )
+    
     fig.savefig(f'../Visualization/{path}/img_{name}_{t}.pdf'
                )
     plt.close()
