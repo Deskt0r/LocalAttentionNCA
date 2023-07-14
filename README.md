@@ -27,19 +27,19 @@ The first layer is a self-attention layer. As input it takes the nine cells, wit
 
 The first visualization shows the behaviour with a single energy deposit close to the start.
 
-![Run 1](./Visualization/Dynamic_Positioning/run1.gif)
+![Run 1](./Visualization/Dynamic_Positioning/short_1.gif)
 
 In the second run, the energy is too far away from the start and cannot be reached.
 
-![Run 2](./Visualization/Dynamic_Positioning/run2.gif)
+![Run 2](./Visualization/Dynamic_Positioning/long_1.gif)
 
 In the third run, the energy is located in a spirale around the start.
 
-![Run 3](./Visualization/Dynamic_Positioning/run3.gif)
+![Run 3](./Visualization/Dynamic_Positioning/spiral_2.gif)
 
-In the fourth run, the energy is located in two, equidistance points. The cells are gong for both deposits, eventually splitting up.
+In the fourth run, the energy is located in two, equidistance points. The cells are going for both deposits.
 
-![Run 4](./Visualization/Dynamic_Positioning/run4.gif)
+![Run 4](./Visualization/Dynamic_Positioning/split_2.gif)
 
 ### To Do:
 * Test energy barrier without retraining
