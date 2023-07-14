@@ -7,6 +7,13 @@ helper.txt
 **/__pycache__/
 **/train_log
 **/Logs
+
+!Logs/
+
+Logs/*
+!Logs/Dynamic_Positioning/
+
+Logs/Dynamic_Positioning/*
 !/Logs/Dynamic_Positioning/04_07_2023_11_03_Logs/
 !/Logs/Dynamic_Positioning/04_07_2023_11_03_Logs/*
 

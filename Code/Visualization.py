@@ -9,28 +9,36 @@ import tensorflow as tf
 from functions_general import *
 from functions_data import SamplePool, target_change, get_initial_state, create_distance_mask
 from functions_update import pre_update, post_update
-from functions_visualization_Copy1 import plot_loss, plot_sample, create_frame
+from functions_visualization import plot_loss, plot_sample, create_frame
 from functions_network import CAModel
 import config 
 
 if __name__ == "__main__":
     
-    mode = "long" # spiral, long, short, split, barrier
-    run = "2"
+    mode = "spiral" # spiral, long, short, split, barrier
+    run = "7"
     sub_path = mode+"_"+run
     path = "Dynamic_Positioning/04_07_2023_11_03_Logs"
     start = [20,20]
     # spiral
     #targets = [[16, 16],[16, 12],[20, 8],[24, 8],[26,12]] #spiral4: energy 8
+    #targets = [[16, 16],[12, 16],[8, 20],[8, 24],[12,26]] #spiral6: energy start 8, split 2
+    targets = [[24, 24],[20, 28],[16, 32],[12, 28],[8,28]] #spiral7: energy start 8, split 2
+    #targets = [[16, 20],[14, 24],[18, 24],[14, 28],[10,28]] #spiral8: energy start 8, split 2
     # split
     #targets = [[24, 20],[28, 16],[28,12],[18, 24],[14, 28],[16,32]] #split1: energy8, split2: energy 5
     #targets = [[25, 15],[30, 10],[35,5],[15, 25],[10, 30],[5,35]] #split3: energy5, split4: energy 8
     #targets = [[24, 16],[28, 12],[32,8],[16, 24],[12, 28],[8,32]] #split5: energy5, split6: energy 3, split7: energy start 5, split 3, split8: energy start 5, split 2
+    #targets = [[20, 16],[20, 12],[20,8],[16, 20],[12, 20],[8,20]]  #split9: energy start 5, split 2
+    #targets = [[20, 16],[20, 12],[20,8],[16, 24],[12, 28],[8,32]]  #split10: energy start 5, split 2
+    #targets = [[24, 20],[28, 20],[32,20],[20, 24],[20, 28],[20,32]]  #split11: energy start 5, split 2
+    
     # short
     #targets = [[24, 20]] #short1: energy 5
+    #targets = [[23,23]] #short2: energy 5, split 2
     # long
     #targets = [[25, 20]] #long1: energy 5
-    targets = [[25,25,]] #long2: energy 5, split 2
+    #targets = [[25,25]] #long2: energy 5, split 2
     
     if not os.path.exists(f'../Visualization/{path}'):
         os.mkdir(f'../Visualization/{path}')
@@ -52,7 +60,7 @@ if __name__ == "__main__":
     #train_log_dynamic_1/tf_ckpts
     seed = np.zeros([8,40, 40, 4], np.float32)
     seed[0, start[0], start[1], 3] = 1.0 #alpha channel
-    seed[0, start[0], start[1], 2] = 5.0 #energy channel
+    seed[0, start[0], start[1], 2] = 8.0 #energy channel
     seed[0, start[0], start[1], 1] = 1.0 #chemical channel
     seed[0, start[0], start[1], 0] = 0.0 #hidden channel
     for j in targets:
