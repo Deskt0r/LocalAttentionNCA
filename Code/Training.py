@@ -117,7 +117,7 @@ if __name__ == "__main__":
             #we replace the worst sample by the initial state
             batch_loss = batch_loss.numpy()
             ind = np.argsort(batch_loss) # good to bad
-            print('len ind',len(ind))
+            #print('len ind',len(ind))
             ar[ind[-1]] = get_initial_state(None, 40, 4, start_ind, target_ind[ind[-1]],init_type="seed", seed=None)
             ar2[ind[-1]] = np.expand_dims(create_distance_mask(target_ind[ind[-1]]),axis=-1)
             if i>20:
